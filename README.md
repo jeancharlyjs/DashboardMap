@@ -1,4 +1,4 @@
-# Importancia del monitoreo de información geoespacial y el uso de Python para la toma de decisiones
+# Analisis de Datos Geoespacial - Polars <> Plotly
 
 En la actualidad, la información geoespacial se ha vuelto cada vez más importante en la toma de decisiones en diversos campos, como la gestión ambiental, la planificación urbana, la gestión de recursos naturales, la seguridad nacional, entre otros. El monitoreo y análisis de información geoespacial ayuda a identificar patrones, tendencias y cambios en el entorno, lo que permite a los tomadores de decisiones planificar estrategias más efectivas y tomar decisiones más informadas.
 
