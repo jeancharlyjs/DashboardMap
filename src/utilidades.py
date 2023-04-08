@@ -6,7 +6,7 @@ from glob import glob
 import polars as pl
 from pathlib import Path
 
-
+from pandas import DataFrame
 def readFile(year, instrumento):
 
 
@@ -21,13 +21,13 @@ def readFile(year, instrumento):
 	df = df.with_columns([(
 			pl.col("brightness") - 273.15).alias("Celsius"), 
 			pl.col("acq_date").str.strptime(pl.Date, fmt="%Y-%m-%d")])
-	
-	# print(df.select(pl.col(["acq_date", "latitude", "longitude", "TOPONIMIA", "Celsius", "instrument"])).groupby([pl.col("acq_date").dt.year(), pl.col("TOPONIMIA")]).agg(pl.mean("Celsius")))
+	# print(df.groupby([pl.col("acq_date").dt.year()]).agg(pl.count()))
 	return {
 			"df": df,
 			"serie": df.select(pl.col(["acq_date", "latitude", "longitude", "TOPONIMIA", "Celsius", "instrument"])).groupby([pl.col("acq_date").dt.year()]).agg(pl.mean("Celsius")),
 			"serie1": df.select(pl.col(["acq_date", "latitude", "longitude", "TOPONIMIA", "Celsius", "instrument"])).groupby([pl.col("acq_date").dt.year(), pl.col("TOPONIMIA"), pl.col("instrument")]).agg(pl.mean("Celsius")),
 			"serie2": df.select(pl.col(["acq_date", "latitude", "longitude", "TOPONIMIA", "Celsius", "instrument"])).groupby([pl.col("acq_date").dt.month(), pl.col("TOPONIMIA"), pl.col("instrument")]).agg(pl.mean("Celsius")),
+			"serie3": df.groupby([pl.col("acq_date").dt.year()]).agg(pl.count()),
 			"instrumento": df[["instrument", "Celsius"]].groupby(df["instrument"]).agg(pl.mean("Celsius")),
 			"filtro": df.filter(pl.col("acq_date").dt.year() == int(year))
 			.select(pl.col(["latitude", "longitude", "instrument", "Celsius"])),
